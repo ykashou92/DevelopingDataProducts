@@ -19,12 +19,22 @@ shinyUI(dashboardPage(
               p("Hi")
       ),
       tabItem(tabName = "tables",
-              h2("Table"),
-              tableOutput("table1")
-      ),
+              h2("Tables"),
+#              h3("Top 5 Most Recent Earthquakes"),
+#              tableOutput("table1"),
+              h3("Top 10 Earthquakes by Magnitude"),
+              tableOutput("table2"),
+              h3("Top 10 Earthquakes by Depth"),
+              tableOutput("table3")
+      ),        
       tabItem(tabName = "widgets",
-              h2("Widgets")
+              h2("Widgets"),
+              dateRangeInput('dateRange',
+                             label = 'Date range input: yyyy-mm-dd',
+                             start = Sys.Date() - 2, end = Sys.Date() + 2
+              )
       ),
+      
       tabItem(tabName = "googleVis",
               h2("Earthquake Visualization using googleVis"),
               h3("Using gvisMap"),
@@ -34,8 +44,10 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
+              h3("Link to GitHub Repo"),
+              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts", "GitHub Repository"),
               h3("ui.R"),
-              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts/blob/master/shiny-app/ui.R", "ui.R", icon = icon ("github")),
+              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts/blob/master/shiny-app/ui.R", "ui.R"),
               h3("server.R"),
               tags$a(href="https://github.com/ykashou92/DevelopingDataProducts/blob/master/shiny-app/server.R", "server.R")
       )
