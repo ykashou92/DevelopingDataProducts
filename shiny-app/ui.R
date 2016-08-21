@@ -20,8 +20,8 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "tables",
               h2("Tables"),
-#              h3("Top 5 Most Recent Earthquakes"),
-#              tableOutput("table1"),
+              h3("Top 5 Most Recent Earthquakes"),
+              tableOutput("table1"),
               h3("Top 10 Earthquakes by Magnitude"),
               tableOutput("table2"),
               h3("Top 10 Earthquakes by Depth"),
@@ -30,7 +30,7 @@ shinyUI(dashboardPage(
       tabItem(tabName = "widgets",
               h2("Widgets"),
               dateRangeInput('dateRange',
-                             label = 'Date range input: yyyy-mm-dd',
+                             label = 'Please Select a Date Range',
                              start = Sys.Date() - 2, end = Sys.Date() + 2
               )
       ),

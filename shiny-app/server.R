@@ -12,7 +12,7 @@ download.file(url, f)
 eq <- read.csv("all_month.csv", header = TRUE, sep = ",")
 eq.subset <- eq[ -c(11:13 ,15:22) ]
 eq$loc <- paste(eq$latitude, eq$longitude, sep = ":")
-eq.ordered_time <- arrange(eq.subset, desc(time))
+eq.ordered_time <- arrange(eq.subset, desc(as.factor(time)))
 eq.ordered_mag <- arrange(eq.subset, desc(mag))
 eq.ordered_depth <- arrange(eq.subset, desc(depth))
 
@@ -24,9 +24,9 @@ eq.ordered_depth <- arrange(eq.subset, desc(depth))
 shinyServer(
   function(input, output) {
       
-#      output$table1 <- renderTable({
-#                eq.table1 <- head(eq.ordered_mag, 5)
-#      })
+      output$table1 <- renderTable({
+                eq.table1 <- head(eq.ordered_time, 5)
+      })
     
       output$table2 <- renderTable({
                 eq.table2 <- head(eq.ordered_mag, 10)
