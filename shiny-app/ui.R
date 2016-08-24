@@ -17,7 +17,39 @@ shinyUI(dashboardPage(
     tabItems(
       tabItem(tabName = "documentation",
               h2("Documentation"),
-              p("Hi")
+              p("This shiny web application was created to fulfill the project requirements for the 
+                Developing Data Products MOOC offered on Coursera by John's Hopkins University as part of their Data Science Specialization."),
+              p("In the project outline, we were told the app is totally up to us, and hence I decided to use the USGS Earthquake Feed as my source."),
+              p("You can manually download the dataset from their website for free at:"),
+              tags$a(href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv", "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv"), 
+              p(""),
+              p("The dataset is automatically updated every 15 minutes and hence you will find the most recent earthquakes on the news in this dataset"),
+              p(""),
+              p("On the left side of the screen you can navigate to various tabs and explore the app as you will,
+                under 'Widgets', you will find 'Controllers' and 'Tables', these are the bread and butter of the app, they are where the data exploration and analyses occur.
+                Under 'googleVis' you will find a plot of the world's earthquakes as per defined in the 'Controllers' tab.
+                Finally, please visit the 'Source Code' tab for access to ui.R and server.R, as well as the GitHub Repository containing this app. Enjoy!"),
+              h4("- Yanal Kashou")
+      ),
+      tabItem(tabName = "widgets",
+              h2("Widgets")
+      ),
+      tabItem(tabName = "control",
+              h2("Controllers"),
+              p("Feel free to play around with these controllers. They modify the dataset according to date range,
+                magnitude and observation number"),
+              p("You can check the checkboxes to select which variables to use"),
+              p("Press Submit when you are ready to be redirected to a newly generated googleVis Map"),
+                             label = 'Please Select a Date Range',
+                             start = Sys.Date() - 2, end = Sys.Date() + 2,
+              checkboxGroupInput("variable", "Variable:",
+                                 c("Magnitude" = "mag",
+                                   "Depth" = "Time")
+              ),
+              sliderInput("num", "How Many Earthquakes would you like me to display?", value = 50, min = 0, max = 100, step = 1), 
+              sliderInput("maRange", "Magnitude", value = c(4,5), min = 0, max = 10, step = 0.1), 
+              h3("Custom Map"),
+              htmlOutput("gviscustom")
       ),
       tabItem(tabName = "tables",
               h2("Tables"),
@@ -28,22 +60,6 @@ shinyUI(dashboardPage(
               h3("Top 10 Earthquakes by Depth"),
               tableOutput("table3")
       ),        
-      tabItem(tabName = "widgets",
-              h2("Widgets"),
-              dateRangeInput('dateRange',
-                             label = 'Please Select a Date Range',
-                             start = Sys.Date() - 2, end = Sys.Date() + 2
-              ),
-              checkboxGroupInput("variable", "Variable:",
-                                 c("Magnitude" = "mag",
-                                   "Depth" = "Time")
-              ),
-              sliderInput("num", "How Many Earthquakes would you like me to display?", value = 50, min = 0, max = 100, step = 1), 
-              sliderInput("maRange", "Magnitude", value = c(4,5), min = 0, max = 10, step = 0.1), 
-              h3("Custom Map"),
-              htmlOutput("gviscustom")
-      ),
-      
       tabItem(tabName = "googleVis",
               h2("Earthquake Visualization using googleVis"),
               h3("Using gvisMap"),
