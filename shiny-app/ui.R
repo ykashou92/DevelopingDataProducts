@@ -5,17 +5,18 @@ shinyUI(dashboardPage(
   dashboardHeader(title = "Earthquakes"),
   dashboardSidebar(
     sidebarMenu(
-    menuItem("Overview", tabName = "overview", icon = icon("dashboard"), 
-             menuSubItem("Tables", tabName = "tables", icon = icon("table"))),
-    menuItem("Widgets", tabName = "widgets", icon = icon("th")),
+    menuItem("Documentation", tabName = "documentation", icon = icon("dashboard")), 
+    menuItem("Widgets", tabName = "widgets", icon = icon("th"),
+        menuSubItem("Controllers", tabName = "control", icon = icon("gear")),
+        menuSubItem("Tables", tabName = "tables", icon = icon("table"))),
     menuItem("googleVis", tabName = "googleVis", icon = icon ("map")),
     menuItem("Source Code", tabName = "sourcecode", icon = icon ("code"))
   )
   ),
   dashboardBody(
     tabItems(
-      tabItem(tabName = "overview",
-              h2("Overview"),
+      tabItem(tabName = "documentation",
+              h2("Documentation"),
               p("Hi")
       ),
       tabItem(tabName = "tables",
@@ -32,7 +33,15 @@ shinyUI(dashboardPage(
               dateRangeInput('dateRange',
                              label = 'Please Select a Date Range',
                              start = Sys.Date() - 2, end = Sys.Date() + 2
-              )
+              ),
+              checkboxGroupInput("variable", "Variable:",
+                                 c("Magnitude" = "mag",
+                                   "Depth" = "Time")
+              ),
+              sliderInput("num", "How Many Earthquakes would you like me to display?", value = 50, min = 0, max = 100, step = 1), 
+              sliderInput("maRange", "Magnitude", value = c(4,5), min = 0, max = 10, step = 0.1), 
+              h3("Custom Map"),
+              htmlOutput("gviscustom")
       ),
       
       tabItem(tabName = "googleVis",

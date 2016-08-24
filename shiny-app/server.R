@@ -10,8 +10,8 @@ url <- "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv"
 f <- file.path(getwd(), "all_month.csv")
 download.file(url, f)
 eq <- read.csv("all_month.csv", header = TRUE, sep = ",")
-eq.subset <- eq[ -c(11:13 ,15:22) ]
 eq$loc <- paste(eq$latitude, eq$longitude, sep = ":")
+eq.subset <- eq[ -c(11:13 ,15:22) ]
 eq.ordered_time <- arrange(eq.subset, desc(as.factor(time)))
 eq.ordered_mag <- arrange(eq.subset, desc(mag))
 eq.ordered_depth <- arrange(eq.subset, desc(depth))
@@ -42,6 +42,26 @@ shinyServer(
         )
       })
       
+      output$gviscustom <- renderGvis({
+        num <- input$num
+        eq.num.custom <- eq.subset[sample(nrow(eq.subset), num), ]
+#        magRange <- input$magRange
+#        eq.mag.custom <- reactive(head(eq.subset, magRange))
+        
+#        dateRange <- input$dateRange
+#        eq.date.custom <- reactive(head(eq.subset, dateRange))
+        
+        eq.mapcustom <- gvisMap(eq.num.custom, locationvar = "loc", tipvar = "mag",
+                          options = list(enableScrollWheel = TRUE,
+                                         mapType = "terrain",
+                                         useMapTypeControl = TRUE, 
+                                         chartid = 1))
+      })
+      
+#      num <- input$num
+#      eq.num <- reactive(head(eq.ordered))
+#      mag <- input$magrange  
+#      output$mag <- reactive(head(eq.ordered_mag))
       
       output$gvis1 <- renderGvis({
                 eq.map <- gvisMap(eq, locationvar = "loc", tipvar = "mag",
@@ -53,8 +73,8 @@ shinyServer(
        })
       
       output$gvis2 <- renderGvis({
-        eq.map <- gvisGeoChart(eq, locationvar = "loc", colorvar = "mag",
-                          options = list(enableScrollWheel = TRUE,
+                 eq.map <- gvisGeoChart(eq, locationvar = "loc", colorvar = "mag",
+                              options = list(enableScrollWheel = TRUE,
                                          mapType = "terrain",
                                          useMapTypeControl = TRUE,
                                          sizeAxis.minValue = 0,
