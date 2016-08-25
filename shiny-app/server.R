@@ -1,3 +1,7 @@
+####################
+### SHINY SERVER ###
+####################
+
 # Load Necessary Libraries
 
 library(plyr)
@@ -7,6 +11,7 @@ library(ggmap)
 library(shiny)
 library(DT)
 library(googleVis)
+library(data.table)
 
 # Download, clean and subset dataset
 
@@ -22,33 +27,28 @@ eq.ordered_depth <- arrange(eq.subset, desc(depth))
 
 "%b/w%" <- function(x, ends) x >= ends[1] & x <= ends[2]
 
-####################
-### SHINY SERVER ###
-####################
-
 shinyServer(
   function(input, output) {
       
-      # Top 5 Most Recent Earthquakes Table
-      output$table1 <- renderTable({
-                eq.table1 <- head(eq.ordered_time, 5)
+      # TABLE SELECTION AND DISPLAY
+      # STATIC TABLES
+      output$tables <- renderTable({
+        if (input$tablelist == "table1") {
+          eq.table1 <- head(eq.ordered_time, 10)
+        }
+        else if (input$tablelist == "table2") {
+          eq.table2 <- head(eq.ordered_mag, 10)
+        }
+        else if (input$tablelist == "table3") {
+          eq.table3 <- head(eq.ordered_depth, 10)
+        }
       })
       
-      # Top 10 Earthquakes by magnitude
-      output$table2 <- renderTable({
-                eq.table2 <- head(eq.ordered_mag, 10)
-      })
-      
-      # Top 10 Earthquakes by depth
-      output$table3 <- renderTable({
-                eq.table3 <- head(eq.ordered_depth, 10)
-      })
-
-      # Calendar Range Entry    
-      output$dateRangeText  <- renderText({
-        paste("input$dateRange is", 
-              paste(as.character(input$dateRange), collapse = " to ")
-        )
+      # DYNAMIC TABLE
+      output$dyntables <- renderDataTable({
+        if (input$tablelist == "dyntable") {
+          eq.table4 <- (data.table(eq.subset))
+        }
       })
       
       # Custom Map based on 
@@ -83,27 +83,4 @@ shinyServer(
                        useMapTypeControl = TRUE, 
                        chartid = 3))
       })   
-           
-          
-      # Standard map
-      output$gvis1 <- renderGvis({
-                eq.map <- gvisMap(eq, locationvar = "loc", tipvar = "mag",
-                            options = list(enableScrollWheel = TRUE,
-                                          mapType = "terrain",
-                                          useMapTypeControl = TRUE, 
-                                          chartid = 1))
-      return(eq.map)  
-       })
-      
-      # Standard geochart
-      output$gvis2 <- renderGvis({
-                 eq.map <- gvisGeoChart(eq, locationvar = "loc", colorvar = "mag",
-                              options = list(enableScrollWheel = TRUE,
-                                         mapType = "terrain",
-                                         useMapTypeControl = TRUE,
-                                         sizeAxis.minValue = 0,
-                                         chartid = 2))
-        return(eq.map)  
-      })
-      
 })

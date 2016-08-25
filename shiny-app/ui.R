@@ -1,16 +1,19 @@
+################
+### SHINY UI ###
+################
+
 library(shiny)
 library(shinydashboard)
 
 shinyUI(dashboardPage(
-  dashboardHeader(title = "Earthquakes"),
+  dashboardHeader(title = "Earthquake Monthly"),
   dashboardSidebar(
     sidebarMenu(
     menuItem("Documentation", tabName = "documentation", icon = icon("dashboard")), 
-    menuItem("Widgets", tabName = "widgets", icon = icon("th"),
-        menuSubItem("Controllers", tabName = "control", icon = icon("gear")),
-        menuSubItem("Tables", tabName = "tables", icon = icon("table")),
-        menuSubItem("Charts", tabName = "charts", icon = icon("chart"))),
-    menuItem("googleVis", tabName = "googleVis", icon = icon ("map")),
+    menuItem("Widgets", tabName = "widgets", icon = icon("gear"),
+        menuSubItem("Map Controller", tabName = "control", icon = icon("map")),
+        menuSubItem("Table Explorer", tabName = "tables", icon = icon("table")),
+        menuSubItem("Chart Plotter", tabName = "charts", icon = icon("bar-chart"))),
     menuItem("Source Code", tabName = "sourcecode", icon = icon ("code"))
   )
   ),
@@ -40,34 +43,26 @@ shinyUI(dashboardPage(
               p("Feel free to play around with these controllers. They modify the dataset according to
                 magnitude and observation number"),
               p("A new gvisMap will be automatically generated according to your specifications"),
-              h3("Please Note:"),
-              p("If you receive an error, please decrease Observation Number or Magnitude Range"),
               sliderInput("magRange", "Select the magnitude range", value = c(0, 10), min = 0, max = 10, step = 1),
               sliderInput("num", "How Many Earthquakes would you like me to display?", value = 50, min = 0, max = 100, step = 1), 
-              h3("Custom Map"),
+              h3("Custom googleVis Map"),
               strong(textOutput("error")),
+              p(""),
               htmlOutput("gviscustom")
       ),
       tabItem(tabName = "tables",
               h2("Tables"),
-              h3("Top 5 Most Recent Earthquakes"),
-              tableOutput("table1"),
-              h3("Top 10 Earthquakes by Magnitude"),
-              tableOutput("table2"),
-              h3("Top 10 Earthquakes by Depth"),
-              tableOutput("table3")
+              selectInput("tablelist", "Choose your table:", choices = c('10 Most Recent Earthquakes'= "table1",
+                                                                         '10 Strongest Earthquakes'= "table2",
+                                                                         'Top 10 Earthquakes by Depth'= "table3",
+                                                                         'Dynamic Earthquake Table' = "dyntable")),
+              tableOutput("tables"),
+              dataTableOutput("dyntables")
       ),
-      tabItem(tabName = "Charts",
+      tabItem(tabName = "charts",
               h2("Earthquake Frequency"),
               h2("Earthquake Heatmap")
               ),
-      tabItem(tabName = "googleVis",
-              h2("Earthquake Visualization using googleVis"),
-              h3("Using gvisMap"),
-              htmlOutput("gvis1"),
-              h3("Using gvisGeoChart"),
-              htmlOutput("gvis2")
-      ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
               h3("Link to GitHub Repo"),
