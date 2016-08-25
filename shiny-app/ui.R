@@ -61,7 +61,7 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "charts",
               h2("Earthquake Frequency"),
-              h+2("Earthquake Heatmap")
+              h2("Earthquake Heatmap")
               ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
