@@ -7,7 +7,6 @@
 library(plyr)
 library(dplyr)
 library(ggplot2)
-library(ggmap)
 library(shiny)
 library(DT)
 library(googleVis)

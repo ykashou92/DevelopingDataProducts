@@ -54,14 +54,14 @@ shinyUI(dashboardPage(
               h2("Tables"),
               selectInput("tablelist", "Choose your table:", choices = c('10 Most Recent Earthquakes'= "table1",
                                                                          '10 Strongest Earthquakes'= "table2",
-                                                                         'Top 10 Earthquakes by Depth'= "table3",
+                                                                         '10 Deepest Earthquakes'= "table3",
                                                                          'Dynamic Earthquake Table' = "dyntable")),
               tableOutput("tables"),
               dataTableOutput("dyntables")
       ),
       tabItem(tabName = "charts",
               h2("Earthquake Frequency"),
-              h2("Earthquake Heatmap")
+              h+2("Earthquake Heatmap")
               ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
