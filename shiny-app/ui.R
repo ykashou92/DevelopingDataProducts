@@ -8,7 +8,8 @@ shinyUI(dashboardPage(
     menuItem("Documentation", tabName = "documentation", icon = icon("dashboard")), 
     menuItem("Widgets", tabName = "widgets", icon = icon("th"),
         menuSubItem("Controllers", tabName = "control", icon = icon("gear")),
-        menuSubItem("Tables", tabName = "tables", icon = icon("table"))),
+        menuSubItem("Tables", tabName = "tables", icon = icon("table")),
+        menuSubItem("Charts", tabName = "charts", icon = icon("chart"))),
     menuItem("googleVis", tabName = "googleVis", icon = icon ("map")),
     menuItem("Source Code", tabName = "sourcecode", icon = icon ("code"))
   )
@@ -36,19 +37,15 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "control",
               h2("Controllers"),
-              p("Feel free to play around with these controllers. They modify the dataset according to date range,
+              p("Feel free to play around with these controllers. They modify the dataset according to
                 magnitude and observation number"),
-              p("You can check the checkboxes to select which variables to use"),
-              p("Press Submit when you are ready to be redirected to a newly generated googleVis Map"),
-                             label = 'Please Select a Date Range',
-                             start = Sys.Date() - 2, end = Sys.Date() + 2,
-              checkboxGroupInput("variable", "Variable:",
-                                 c("Magnitude" = "mag",
-                                   "Depth" = "Time")
-              ),
+              p("A new gvisMap will be automatically generated according to your specifications"),
+              h3("Please Note:"),
+              p("If you receive an error, please decrease Observation Number or Magnitude Range"),
+              sliderInput("magRange", "Select the magnitude range", value = c(0, 10), min = 0, max = 10, step = 1),
               sliderInput("num", "How Many Earthquakes would you like me to display?", value = 50, min = 0, max = 100, step = 1), 
-              sliderInput("maRange", "Magnitude", value = c(4,5), min = 0, max = 10, step = 0.1), 
               h3("Custom Map"),
+              strong(textOutput("error")),
               htmlOutput("gviscustom")
       ),
       tabItem(tabName = "tables",
@@ -59,7 +56,11 @@ shinyUI(dashboardPage(
               tableOutput("table2"),
               h3("Top 10 Earthquakes by Depth"),
               tableOutput("table3")
-      ),        
+      ),
+      tabItem(tabName = "Charts",
+              h2("Earthquake Frequency"),
+              h2("Earthquake Heatmap")
+              ),
       tabItem(tabName = "googleVis",
               h2("Earthquake Visualization using googleVis"),
               h3("Using gvisMap"),
