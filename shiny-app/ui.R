@@ -61,8 +61,9 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "charts",
               h2("Earthquake Frequency"),
-              h2("Earthquake Heatmap")
-              ),
+              plotlyOutput("eq.plot_1"),
+              wellPanel(uiOutput("xbins"))
+      ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
               h3("Link to GitHub Repo"),

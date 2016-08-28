@@ -11,6 +11,7 @@ library(shiny)
 library(DT)
 library(googleVis)
 library(data.table)
+library(plotly)
 
 # Download, clean and subset dataset
 
@@ -46,7 +47,7 @@ shinyServer(
       # DYNAMIC TABLE
       output$dyntables <- renderDataTable({
         if (input$tablelist == "dyntable") {
-          eq.table4 <- (data.table(eq.subset))
+          eq.table4 <- eq.subset
         }
       })
       
@@ -81,5 +82,17 @@ shinyServer(
                        mapType = "terrain",
                        useMapTypeControl = TRUE, 
                        chartid = 3))
-      })   
+      })
+        
+        ### PLOTLY ###
+      output$xbins <- reactiveUI(function() {
+        sliderInput("xbins", "Choose a value:",
+                    min = 10, max = 40, step = 1, value = 25)
+        })
+      
+        output$eq.plot_1 <- renderPlotly({
+          hist1 <- ggplot(data = eq, aes(mag, fill = (..count..))) + geom_histogram(bins = input$xbins)
+          p1 <- ggplotly(hist1)
+          p1
+        })
 })
