@@ -2,17 +2,6 @@
 ### SHINY SERVER ###
 ####################
 
-# Load Necessary Libraries
-
-library(plyr)
-library(dplyr)
-library(ggplot2)
-library(shiny)
-library(DT)
-library(googleVis)
-library(data.table)
-library(plotly)
-
 # Download, clean and subset dataset
 
 url <- "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv"
