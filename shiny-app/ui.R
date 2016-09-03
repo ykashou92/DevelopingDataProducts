@@ -27,8 +27,7 @@ shinyUI(dashboardPage(
               p("The dataset is automatically updated every 15 minutes and hence you will find the most recent earthquakes on the news in this dataset"),
               p(""),
               p("On the left side of the screen you can navigate to various tabs and explore the app as you will,
-                under 'Widgets', you will find 'Controllers' and 'Tables', these are the bread and butter of the app, they are where the data exploration and analyses occur.
-                Under 'googleVis' you will find a plot of the world's earthquakes as per defined in the 'Controllers' tab.
+                under 'Widgets', you will find 'Map Controller', 'Table Explorer' and 'Chart Plotter', these are the bread and butter of the app, they are where the data exploration and analyses occur.
                 Finally, please visit the 'Source Code' tab for access to ui.R and server.R, as well as the GitHub Repository containing this app. Enjoy!"),
               h4("- Yanal Kashou")
       ),
@@ -63,12 +62,10 @@ shinyUI(dashboardPage(
       ),
       tabItem(tabName = "sourcecode",
               h2("Source Code"),
-              h3("Link to GitHub Repo"),
-              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts", "GitHub Repository"),
-              h3("ui.R"),
-              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts/blob/master/shiny-app/ui.R", "ui.R"),
-              h3("server.R"),
-              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts/blob/master/shiny-app/server.R", "server.R")
+              h3("For the RPubs Presentation, please vist:"),
+              tags$a(href="http://rpubs.com/ykashou92/earthquake-app-presentation", "RPubs Presentation"),
+              h3("For the GitHub Repository, please visit:"),
+              tags$a(href="https://github.com/ykashou92/DevelopingDataProducts", "GitHub Repository")
       )
     )
   )

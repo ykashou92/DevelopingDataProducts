@@ -81,13 +81,7 @@ shinyServer(
         })
       
         output$eq.plot_1 <- renderPlotly({
-          #x = eq.subset$mag
-          #minx = min(x)
-          #maxx = max(x)
-          #bins <- input$xbins
-          #p1 <- plot_ly(data = eq, x = mag, type = "histogram", colors = "Blues", autobinx = FALSE, xbins = list(start = minx, end = maxx, size = ((maxx-minx)/bins)))
-          #p1
-          hist1 <- ggplot(data = eq.subset, aes(mag, fill = "blue")) + geom_histogram(bins = input$xbins)
+          hist1 <- ggplot(data = eq.subset, aes(mag)) + geom_histogram(bins = input$xbins, fill = 'navy', colour = 'black')
           p1 <- ggplotly(hist1)
           p1
       
