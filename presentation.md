@@ -1,4 +1,4 @@
-Developing Data Products Course Project - Earthquake App
+Developing Data Products Project - Earthquake App
 ========================================================
 author: Yanal Kashou
 date: 28/8/2016
@@ -60,7 +60,6 @@ A drop down menu of tables to display, 3 static, and 1 dynamic.
 A frequency histogram plot of earthquake count and magnitude with a reactive slider input for the number of bins to display.  
 
 
-
 Source Code
 ========================================================
 This presentation was made using RStudio Presenter and is Published on __RPubs__ with the following URL:  
@@ -71,4 +70,3 @@ The app was deployed on __shinyapp.io__ and the URL is:
   
 Finally the link to the __GitHub__ repository is:  
 <https://github.com/ykashou92/DevelopingDataProducts>
-
