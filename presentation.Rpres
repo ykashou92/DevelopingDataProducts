@@ -1,0 +1,61 @@
+Developing Data Products Course Project - Earthquake App
+========================================================
+author: Yanal Kashou
+date: 28/8/2016
+autosize: true
+
+Overview
+========================================================
+This shiny web application was created to fulfill the project requirements for the Developing Data Products MOOC offered on Coursera by John's Hopkins University as part of their Data Science Specialization.
+
+We needed to create a web application using the shiny framework and have it deployed. 
+
+In the project outline, we were told the app is totally up to us, and hence I decided to use the USGS Earthquake Feed as my source.
+
+You can manually download the dataset from their website for free at:
+<http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv> 
+
+The dataset is automatically updated every 15 minutes and hence you will find the most recent earthquakes on the news in this dataset.
+
+
+The Dataset
+========================================================
+
+```{r}
+#An Example of how the dataset looks after subsetting
+eq <- read.csv("all_month.csv", header = TRUE, sep = ",")
+eq$loc <- paste(eq$latitude, eq$longitude, sep = ":")
+eq.subset <- eq[ -c(11:13 ,15:22) ]
+str(eq.subset)
+```
+
+The Application
+========================================================
+
+The application uses the `shinydashboard` package for it's layout.  
+The sidebar has 3 main menu items, Documentation, Widgets and Source Code.  
+Documentation provides an idea of what the app is all about and Source Code links to the source files. While the Widgets menu has 3 menu sub-items:  
+* __Map Controller__  
+A very fluid earthquake display map with Magnitude and Observation Sliders  
+* __Table Explorer__  
+A drop down menu of tables to display, 3 static, and 1 dynamic.  
+* __Chart Plotter__  
+A frequency histogram plot of earthquake count and magnitude with a reactive slider input for the number of bins to display.  
+
+```{r, echo=FALSE}
+
+```
+
+Source Code
+========================================================
+This presentation was made using RStudio Presenter and is Published on __RPubs__ with the following URL:  
+<http://rpubs.com/ykashou92/earthquake-app-presentation>
+
+The app was deployed on __shinyapp.io__ and the URL is:  
+<http://ykashou92.shinyapps.io/earthquake-app>
+  
+Finally the link to the __GitHub__ repository is:  
+<https://github.com/ykashou92/DevelopingDataProducts>
+```{r}
+
+```

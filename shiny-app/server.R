@@ -10,6 +10,7 @@ download.file(url, f)
 eq <- read.csv("all_month.csv", header = TRUE, sep = ",")
 eq$loc <- paste(eq$latitude, eq$longitude, sep = ":")
 eq.subset <- eq[ -c(11:13 ,15:22) ]
+eq.subset <- subset(eq.subset, mag > 0)
 eq.ordered_time <- arrange(eq.subset, desc(as.factor(time)))
 eq.ordered_mag <- arrange(eq.subset, desc(mag))
 eq.ordered_depth <- arrange(eq.subset, desc(depth))
@@ -80,8 +81,15 @@ shinyServer(
         })
       
         output$eq.plot_1 <- renderPlotly({
-          hist1 <- ggplot(data = eq, aes(mag, fill = (..count..))) + geom_histogram(bins = input$xbins)
+          #x = eq.subset$mag
+          #minx = min(x)
+          #maxx = max(x)
+          #bins <- input$xbins
+          #p1 <- plot_ly(data = eq, x = mag, type = "histogram", colors = "Blues", autobinx = FALSE, xbins = list(start = minx, end = maxx, size = ((maxx-minx)/bins)))
+          #p1
+          hist1 <- ggplot(data = eq.subset, aes(mag, fill = "blue")) + geom_histogram(bins = input$xbins)
           p1 <- ggplotly(hist1)
           p1
+      
         })
 })
